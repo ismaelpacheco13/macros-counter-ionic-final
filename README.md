@@ -1,7 +1,7 @@
 # Macros Counter
 
 <p align="center">
-  <img src="media-readme/logo.png" alt="logo">
+  <img src="media-readme/logo.png" alt="logo" width="200" height="200">
 </p>
 
 # Sobre el proyecto

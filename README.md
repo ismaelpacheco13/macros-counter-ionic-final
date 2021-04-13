@@ -23,6 +23,7 @@ Si consigues llegar a las kcal que se te marcan diariamente, insertando las comi
 <img src="media-readme/iniciarsesion.png" alt="iniciarsesion"/>
 <img src="media-readme/barralateral.png" alt="barralateral"/>
 <img src="media-readme/anadircomida.png" alt="anadircomida"/>
+<img src="media-readme/calendario.png" alt="calendario"/>
 
 # Objetivos
 

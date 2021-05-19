@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      Macros Counter
+    </ion-title>
+    <ion-buttons slot="start" class="ion-padding">
+      <ion-button href="/settings">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" class="ion-padding">
+      <ion-button (click)="goEditFood()">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-grid class="ion-text-center">
+    {{ kcal.toFixed(0) }} / {{ kcalMax.toFixed(0) }} kcal
+    <ion-row>
+      <ion-col>
+        <div>
+          <a>Proteinas</a>
+          <ion-progress-bar color="primary" value="{{ proteinBar }}"></ion-progress-bar>
+          {{ protein.toFixed(0) }} / {{ proteinMax.toFixed(0) }} gr
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <a>Hidratos</a>
+          <ion-progress-bar color="secondary" value="{{ carbsBar }}"></ion-progress-bar>
+          {{ carbs.toFixed(0) }} / {{ carbsMax.toFixed(0) }} gr
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <a>Grasas</a>
+          <ion-progress-bar color="tertiary" value="{{ fatsBar }}"></ion-progress-bar>
+          {{ fats.toFixed(0) }} / {{ fatsMax.toFixed(0) }} gr
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list *ngIf="breakfast.length > 0">
+    <ion-list-header>Desayuno</ion-list-header>
+    <ion-item *ngFor="let food of breakfast">
+      <ion-label (click)="presentAlert(food)">{{ food.name }}</ion-label>
+      <ion-icon name="trash" (click)="presentAlertConfirm(food)"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="lunch.length > 0">
+    <ion-list-header>Almuerzo</ion-list-header>
+    <ion-item *ngFor="let food of lunch">
+      <ion-label (click)="presentAlert(food)">{{ food.name }}</ion-label>
+      <ion-icon name="trash" (click)="presentAlertConfirm(food)"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="dinner.length > 0">
+    <ion-list-header>Cena</ion-list-header>
+    <ion-item *ngFor="let food of dinner">
+      <ion-label (click)="presentAlert(food)">{{ food.name }}</ion-label>
+      <ion-icon name="trash" (click)="presentAlertConfirm(food)"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <!-- {{ breakfast | json }}<br>
+  {{ lunch | json }}<br>
+  {{ dinner | json }} -->
+</ion-content>

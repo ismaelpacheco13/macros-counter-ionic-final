@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Configuración Macros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Peso actual (kg)</ion-label>
+      <ion-input clearInput type="number" [(ngModel)]="setting.weight"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Edad</ion-label>
+      <ion-input clearInput type="number" [(ngModel)]="setting.age"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Estatura (cm)</ion-label>
+      <ion-input clearInput type="number" [(ngModel)]="setting.height"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Sexo</ion-label>
+      <ion-select [(ngModel)]="setting.sex">
+        <ion-select-option value="male">Hombre</ion-select-option>
+        <ion-select-option value="female">Mujer</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Actividad Física</ion-label>
+      <ion-select [(ngModel)]="setting.physicalActivity">
+        <ion-select-option value="sedentario">Sedentario (Poco o nada de ejercicio)</ion-select-option>
+        <ion-select-option value="leve">Levemente activo (Deporte 1-3 veces por semana)</ion-select-option>
+        <ion-select-option value="moderado">Moderadamente activo (Deporte 3-5 veces por semana)</ion-select-option>
+        <ion-select-option value="activo">Muy activo (Deporte 6-7 veces por semana)</ion-select-option>
+        <ion-select-option value="hiperactivo">Hiperactivo (Deporte todos los días + de 2h)</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Objetivo</ion-label>
+      <ion-select [(ngModel)]="setting.goal">
+        <ion-select-option value="lose">Perder peso lentamente</ion-select-option>
+        <ion-select-option value="loseFast">Perder peso rápidamente</ion-select-option>
+        <ion-select-option value="maintain">Mantener peso</ion-select-option>
+        <ion-select-option value="gain">Ganar peso lentamente</ion-select-option>
+        <ion-select-option value="gainFast">Ganar peso rápidamente</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <br>
+    <ion-button expand="full" (click)="saveSettings()">Guardar</ion-button>
+  </ion-list>
+</ion-content>

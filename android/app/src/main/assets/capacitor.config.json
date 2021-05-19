@@ -1,0 +1,13 @@
+{
+  "appId": "com.example.app",
+  "appName": "Macros-Counter",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

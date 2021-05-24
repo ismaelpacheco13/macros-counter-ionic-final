@@ -3,6 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end" class="ion-padding">
+      <ion-button (click)="authService.SignOut()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Configuración Macros</ion-title>
   </ion-toolbar>
 </ion-header>

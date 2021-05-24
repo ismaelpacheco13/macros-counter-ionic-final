@@ -5,6 +5,7 @@ import { Food } from '../model/food';
 import { Setting } from '../model/setting';
 import { FoodsService } from '../services/foods.service';
 import { SettingsService } from '../services/settings.service';
+import { AuthenticationService } from '../shared/authentication-service';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +34,8 @@ export class HomePage {
     private foodsService: FoodsService,
     private settingsService: SettingsService,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    public authService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -43,6 +45,10 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
+    if(!this.authService.isLoggedIn) { // Hay que mirar el fallo de la suscripción del authentication-service (una vez iniciada sesión y cerrada otra vez no se vuelve a crear el user en el localStorage)
+      this.router.navigate(['login']);
+    }
+
     this.breakfast = this.foodsService.getBreakfast();
     this.lunch = this.foodsService.getLunch();
     this.dinner = this.foodsService.getDinner();

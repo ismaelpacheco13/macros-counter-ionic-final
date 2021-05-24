@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Setting } from 'src/app/model/setting';
 import { SettingsService } from 'src/app/services/settings.service';
+import { AuthenticationService } from '../../shared/authentication-service';
 
 @Component({
   selector: 'app-settings',
@@ -15,7 +16,8 @@ export class SettingsPage implements OnInit {
 
   constructor(
     private settingsService: SettingsService,
-    private router: Router
+    private router: Router,
+    public authService: AuthenticationService
   ) { }
 
   ngOnInit() {

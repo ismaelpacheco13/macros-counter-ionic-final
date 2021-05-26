@@ -25,6 +25,10 @@ export class SettingsPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    if(!this.authService.isLoggedIn) {
+      this.router.navigate(['login']);
+    }
+
     this.setting = this.settingsService.getSetting();
   }
 

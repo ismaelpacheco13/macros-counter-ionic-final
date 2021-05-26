@@ -1,34 +1,51 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/register">Registrarse</ion-button>
     </ion-buttons>
-    <ion-title>Sign in User</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form>    
+  <div id="header">
+    <img src='../../../assets/logoprueba.png' />
+  </div>
+
+  <form>
+
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
       <ion-input type="text" #email required></ion-input>
     </ion-item> 
 
     <ion-item lines="full">
-      <ion-label position="floating">Password</ion-label>
+      <ion-label position="floating">Contraseña</ion-label>
       <ion-input type="password" #password required></ion-input>
     </ion-item>
 
     <ion-row>
       <ion-col> 
-      <ion-button type="submit" (click)="logIn(email, password)" expand="block">Login</ion-button>
+      <ion-button type="submit" (click)="logIn(email, password)" expand="block">Iniciar Sesión</ion-button>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit" color="danger" (click)="authService.GoogleAuth()" expand="block">
-          Login with Google
+        <ion-button color="danger" (click)="authService.GoogleAuth()" expand="block">
+          <ion-icon slot="start" name="logo-google"></ion-icon>
+          
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button type="submit" color="danger" (click)="authService.FacebookAuth()" expand="block">
+          <ion-icon slot="start" name="logo-facebook"></ion-icon>
+          
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button type="submit" color="danger" (click)="authService.TwitterAuth()" expand="block">
+          <ion-icon slot="start" name="logo-twitter"></ion-icon>
+          
         </ion-button>
       </ion-col>
     </ion-row>

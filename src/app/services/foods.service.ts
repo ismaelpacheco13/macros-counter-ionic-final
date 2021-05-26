@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Food } from '../model/food';
 
 import { Plugins } from '@capacitor/core';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
+import { AngularFireAuth } from '@angular/fire/auth';
 const { Storage } = Plugins;
 
 
@@ -14,8 +16,12 @@ export class FoodsService {
   lunch: Food[] = [];
   dinner: Food[] = [];
   foodCounter: number = 0;
+  foodListRef: AngularFireList<any>;
+  foodRef: AngularFireList<any>;
 
   constructor(
+    private db: AngularFireDatabase,
+    public ngFireAuth: AngularFireAuth
   ) {
     /* this.breakfast = [
       {
@@ -173,6 +179,7 @@ export class FoodsService {
 
     await this.saveFoods(this.breakfast, this.lunch, this.dinner);
     await this.saveFoodCounter(this.foodCounter);
+    await this.createRealtimeFood(f, typeOfFood);
 
   }
 
@@ -211,4 +218,18 @@ export class FoodsService {
 
     await this.saveFoods(this.breakfast, this.lunch, this.dinner);
   }
+
+  // Realtime Database (Firebase)
+  public createRealtimeFood(f: Food, typeOfFood: string) {
+    let uid = this.ngFireAuth.auth.currentUser.uid;
+    let time = new Date().toDateString();
+    this.foodListRef = this.db.list('/' + uid + '/' + time + '/food' + '/' + typeOfFood);
+    return this.foodListRef.push(f);
+  }
+
+  // public deleteRealtimefood(f: Food) {
+  //   let uid = this.ngFireAuth.auth.currentUser.uid;
+  //   this.foodRef = this.db.list('/' + uid + '/food' + '/' + Object.);
+  // }
+
 }

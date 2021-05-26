@@ -7,6 +7,7 @@ export const environment = {
   firebaseConfig: {
     apiKey: "AIzaSyB7qgLcQQJF2rlkJqJCYFFynI9GJwSw-xg",
     authDomain: "macroscounter-final.firebaseapp.com",
+    databaseURL: "https://macroscounter-final-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "macroscounter-final",
     storageBucket: "macroscounter-final.appspot.com",
     messagingSenderId: "546018831522",

@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Setting } from '../model/setting';
 
 import {Plugins } from '@capacitor/core';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
+import { AuthenticationService } from '../shared/authentication-service';
+import { AngularFireAuth } from '@angular/fire/auth';
 const { Storage } = Plugins;
 
 @Injectable({
@@ -12,22 +15,37 @@ export class SettingsService {
   setting: Setting = {age: 0, height: 0, weight: 0, sex: "", physicalActivity: ""
                      ,kcal: 0, bmr: 0, protein: 0, carbs: 0, fats: 0};
 
-  constructor() {
-    this.getSettingFromStorage().then(
-      data => this.setting = data
-    );
+  settingListRef: AngularFireList<any>;
+  settingRef: AngularFireObject<any>;
+  id: any;
+
+  constructor(
+    private db: AngularFireDatabase,
+    public ngFireAuth: AngularFireAuth,
+    public authService: AuthenticationService
+  ) {
+    this.ngFireAuth.authState.subscribe(user => {
+      if (user) {
+        this.getRealtimeSettings();
+      } else {
+        
+      }
+    })
+    // this.getSettingFromStorage().then(
+    //   data => this.setting = data
+    // );
   }
 
   getSetting() {
     return this.setting;
   }
 
-  public async getSettingFromStorage(): Promise<Setting> {
-    const item = await Storage.get({key: 'setting' });
-    return JSON.parse(item.value);
-  }
+  // public async getSettingFromStorage(): Promise<Setting> {
+  //   const item = await Storage.get({key: 'setting' });
+  //   return JSON.parse(item.value);
+  // }
 
-  public async saveSettings(s: Setting) {
+  public saveSettings(s: Setting) {
     // Calculo de calorías metabolismo basal (Fórmula de Harris-Benedict)
     if (s.sex == "male") {
       s.bmr = 66.473 + (13.751 * s.weight) + (5.0033 * s.height) - (6.7550 * s.age);
@@ -68,13 +86,39 @@ export class SettingsService {
     
     this.setting = s;
 
-    await this.saveSetting(this.setting);
+    this.saveRealtimeSettings(this.setting);
+    this.getRealtimeSettings();
+
+
+    // await this.saveSetting(this.setting);
   }
 
-  public async saveSetting(setting: Setting) {
+  /* public async saveSetting(setting: Setting) {
     await Storage.set({
       key: 'setting',
       value: JSON.stringify(setting)
+    });
+  } */
+
+  // Realtime Database (Firebase)
+  public saveRealtimeSettings(s: Setting) {
+    // const user = JSON.parse(localStorage.getItem('user'));
+    // let uid = user.uid;
+    let uid = this.ngFireAuth.auth.currentUser.uid;
+    this.settingListRef = this.db.list(`/${uid}/settings/`);
+    this.settingListRef.set(uid, s);
+    // let key = this.settingListRef.push(s).key;
+    // s.key = key;
+    // this.settingListRef.update(key, s); // Guardamos la key del push dentro del objeto y la updateamos a la bd
+  }
+
+  public getRealtimeSettings() {
+    // const user = JSON.parse(localStorage.getItem('user'));
+    // let uid = user.uid;
+    let uid = this.ngFireAuth.auth.currentUser.uid;
+    this.settingRef = this.db.object(`/${uid}/settings/${uid}`);
+    return this.settingRef.valueChanges().subscribe(res => {
+      this.setting = res;
     });
   }
 }

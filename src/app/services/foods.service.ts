@@ -4,6 +4,9 @@ import { Food } from '../model/food';
 import { Plugins } from '@capacitor/core';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
+
+import { v4 as uuidv4 } from 'uuid';
+
 const { Storage } = Plugins;
 
 
@@ -17,7 +20,7 @@ export class FoodsService {
   dinner: Food[] = [];
   foodCounter: number = 0;
   foodListRef: AngularFireList<any>;
-  foodRef: AngularFireList<any>;
+  foodRef: AngularFireObject<any>;
 
   constructor(
     private db: AngularFireDatabase,
@@ -104,7 +107,7 @@ export class FoodsService {
 
   }
 
-  public getSingleFood(id: number): Food {
+  public getSingleFood(id: string): Food {
     if (this.breakfast.find(f => f.id === id)) {
       return this.breakfast.filter(f => f.id === id)[0];
     } else if (this.lunch.find(f => f.id === id)) {
@@ -114,7 +117,7 @@ export class FoodsService {
     }
   }
 
-  public getTypeOfFood(id: number): string {
+  public getTypeOfFood(id: string): string {
     if (this.breakfast.find(f => f.id === id)) {
       return "breakfast";
     } else if (this.lunch.find(f => f.id === id)) {
@@ -156,30 +159,35 @@ export class FoodsService {
     return this.dinner;
   }
 
-  public async saveFood(f: Food, typeOfFood: string) {
+  public async saveFood(f: Food) {
     if (f.id == undefined) { // Comida nueva
-      f.id = this.foodCounter++;
-      if (typeOfFood == "breakfast") {
-        this.breakfast.push(f);
-      } else if (typeOfFood == "lunch") {
-        this.lunch.push(f);
-      } else {
-        this.dinner.push(f);
+      f.id = uuidv4();
+      if (f.typeOfFood != undefined) {
+        if (f.typeOfFood == "breakfast") {
+          this.breakfast.push(f);
+        } else if (f.typeOfFood == "lunch") {
+          this.lunch.push(f);
+        } else {
+          this.dinner.push(f);
+        }
       }
+      
     } else { // Edición de una comida
       this.deleteFood(f.id);
-      if (typeOfFood == "breakfast") {
-        this.breakfast.push(f);
-      } else if (typeOfFood == "lunch") {
-        this.lunch.push(f);
-      } else {
-        this.dinner.push(f);
+      if (f.typeOfFood != undefined) {
+        if (f.typeOfFood == "breakfast") {
+          this.breakfast.push(f);
+        } else if (f.typeOfFood == "lunch") {
+          this.lunch.push(f);
+        } else {
+          this.dinner.push(f);
+        }
       }
     }
 
     await this.saveFoods(this.breakfast, this.lunch, this.dinner);
     await this.saveFoodCounter(this.foodCounter);
-    await this.createRealtimeFood(f, typeOfFood);
+    await this.createRealtimeFood(f);
 
   }
 
@@ -207,7 +215,7 @@ export class FoodsService {
     });
   }
 
-  public async deleteFood(id: number) {
+  public async deleteFood(id: string) {
     if (this.breakfast.find(f => f.id === id)) {
       this.breakfast = this.breakfast.filter(f => f.id != id);
     } else if (this.lunch.find(f => f.id === id)) {
@@ -220,16 +228,19 @@ export class FoodsService {
   }
 
   // Realtime Database (Firebase)
-  public createRealtimeFood(f: Food, typeOfFood: string) {
+  public createRealtimeFood(f: Food) {
     let uid = this.ngFireAuth.auth.currentUser.uid;
     let time = new Date().toDateString();
-    this.foodListRef = this.db.list('/' + uid + '/' + time + '/food' + '/' + typeOfFood);
+    // this.foodListRef = this.db.list('/' + uid + '/' + time + '/food' + '/' + f.typeOfFood + '/' + f.id);
+    this.foodListRef = this.db.list(`/${uid}/${time}/food/${f.typeOfFood}/${f.id}`);
     return this.foodListRef.push(f);
   }
 
-  // public deleteRealtimefood(f: Food) {
-  //   let uid = this.ngFireAuth.auth.currentUser.uid;
-  //   this.foodRef = this.db.list('/' + uid + '/food' + '/' + Object.);
-  // }
+  public deleteRealtimeFood(f: Food) {
+    let uid = this.ngFireAuth.auth.currentUser.uid;
+    let time = new Date().toDateString(); // HAY QUE ARREGLARLO Y SELECCIONAR LA FECHA QUE ESTA SELECCIONADA EN EL FUTURO CALENDARIO DE LA APP Y NO LA FECHA ACTUAL
+    this.foodRef = this.db.object('/' + uid + '/' + time + '/food' + '/' + f.typeOfFood + '/' + f.id);
+    return this.foodRef.remove();
+  }
 
 }

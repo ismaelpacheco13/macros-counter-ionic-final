@@ -10,8 +10,7 @@ import { FoodsService } from 'src/app/services/foods.service';
 })
 export class EditPage implements OnInit {
 
-  food: Food = {name: '', kcal: 0, grml: 0, protein: 0, carbs: 0, fats: 0}
-  typeOfFood: string;
+  food: Food = {name: '', kcal: 0, grml: 0, protein: 0, carbs: 0, fats: 0, typeOfFood: 'breakfast'}
 
   constructor(
     private foodsService: FoodsService,
@@ -20,16 +19,14 @@ export class EditPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.typeOfFood = "breakfast"; // default value of food
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id != null) {
-      this.food = this.foodsService.getSingleFood(+id);
-      this.typeOfFood = this.foodsService.getTypeOfFood(+id);
+      this.food = this.foodsService.getSingleFood(id);
     }
   }
 
   saveFood() {
-    this.foodsService.saveFood(this.food, this.typeOfFood);
+    this.foodsService.saveFood(this.food);
     this.router.navigateByUrl('/');
   }
 

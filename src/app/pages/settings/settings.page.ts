@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { Router } from '@angular/router';
 import { Setting } from 'src/app/model/setting';
 import { SettingsService } from 'src/app/services/settings.service';
@@ -17,7 +19,9 @@ export class SettingsPage implements OnInit {
   constructor(
     private settingsService: SettingsService,
     private router: Router,
-    public authService: AuthenticationService
+    public authService: AuthenticationService,
+    private db: AngularFireDatabase,
+    public ngFireAuth: AngularFireAuth
   ) { }
 
   ngOnInit() {
@@ -28,7 +32,7 @@ export class SettingsPage implements OnInit {
     if(!this.authService.isLoggedIn) {
       this.router.navigate(['login']);
     }
-
+    
     this.setting = this.settingsService.getSetting();
   }
 

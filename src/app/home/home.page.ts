@@ -47,8 +47,10 @@ export class HomePage {
   ionViewWillEnter() {
     if(!this.authService.isLoggedIn) { // Hay que mirar el fallo de la suscripción del authentication-service (una vez iniciada sesión y cerrada otra vez no se vuelve a crear el user en el localStorage)
       this.router.navigate(['login']);
+    } else {
+      
     }
-
+    console.log(this.setting);
     this.breakfast = this.foodsService.getBreakfast();
     this.lunch = this.foodsService.getLunch();
     this.dinner = this.foodsService.getDinner();
@@ -58,11 +60,11 @@ export class HomePage {
     this.updateProgressBars();
   }
 
-  goEditFood(id: number) {
+  goEditFood(id: string) {
     this.router.navigateByUrl(`/edit${id != undefined ? '/' + id : ''}`);
   }
 
-  deleteFood(id: number) {
+  deleteFood(id: string) {
     this.foodsService.deleteFood(id);
     if (this.breakfast.find(f => f.id === id)) {
       this.breakfast = this.foodsService.getBreakfast();

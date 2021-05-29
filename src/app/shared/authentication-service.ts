@@ -98,6 +98,11 @@ export class AuthenticationService {
     })
   }
 
+  getUid() {
+    let uid = this.ngFireAuth.auth.currentUser.uid;
+    return uid;
+  }
+
   // Store user in localStorage
   SetUserData(user) {
     const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`users/${user.uid}`);

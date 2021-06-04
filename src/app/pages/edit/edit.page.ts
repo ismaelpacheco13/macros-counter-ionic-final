@@ -11,6 +11,7 @@ import { FoodsService } from 'src/app/services/foods.service';
 export class EditPage implements OnInit {
 
   food: Food = {name: '', kcal: 0, grml: 0, protein: 0, carbs: 0, fats: 0, typeOfFood: 'breakfast'}
+  date: string;
 
   constructor(
     private foodsService: FoodsService,
@@ -23,10 +24,12 @@ export class EditPage implements OnInit {
     if (id != null) {
       this.food = this.foodsService.getSingleFood(id);
     }
+
+    this.date = localStorage.getItem('date');
   }
 
   saveFood() {
-    this.foodsService.saveFood(this.food);
+    this.foodsService.saveFood(this.food, this.date);
     this.router.navigateByUrl('/');
   }
 

@@ -29,6 +29,7 @@ export class HomePage {
   carbsBar: number = 0;
   fatsBar: number = 0;
   setting: Setting;
+  date: string;
 
   constructor(
     private foodsService: FoodsService,
@@ -42,15 +43,21 @@ export class HomePage {
     this.breakfast = this.foodsService.getBreakfast();
     this.lunch = this.foodsService.getLunch();
     this.dinner = this.foodsService.getDinner();
+
+    this.date = new Date().toISOString();
+    this.date = this.date.split('T')[0];
+    localStorage.setItem('date', this.date);
   }
 
   ionViewWillEnter() {
-    if(!this.authService.isLoggedIn) { // Hay que mirar el fallo de la suscripción del authentication-service (una vez iniciada sesión y cerrada otra vez no se vuelve a crear el user en el localStorage)
+    if(!this.authService.isLoggedIn) { 
       this.router.navigate(['login']);
     } else {
-      
+      this.foodsService.getRealtimeFoodBreakfastList();
+      this.foodsService.getRealtimeFoodLunchList();
+      this.foodsService.getRealtimeFoodDinnerList();
     }
-    console.log(this.setting);
+    
     this.breakfast = this.foodsService.getBreakfast();
     this.lunch = this.foodsService.getLunch();
     this.dinner = this.foodsService.getDinner();
@@ -58,10 +65,25 @@ export class HomePage {
     this.updateMacros();
     this.updateMacrosMax();
     this.updateProgressBars();
+    
   }
 
-  goEditFood(id: string) {
-    this.router.navigateByUrl(`/edit${id != undefined ? '/' + id : ''}`);
+  async goEditFood(id: string) {
+    await this.router.navigateByUrl(`/edit${id != undefined ? '/' + id : ''}`);
+  }
+
+  changeDate() {
+    
+    this.date = this.date.split('T')[0];
+    localStorage.setItem('date', this.date);
+
+    this.foodsService.getRealtimeFoodBreakfastList();
+    this.foodsService.getRealtimeFoodLunchList();
+    this.foodsService.getRealtimeFoodDinnerList();
+
+    this.breakfast = this.foodsService.getBreakfast();
+    this.lunch = this.foodsService.getLunch();
+    this.dinner = this.foodsService.getDinner();
   }
 
   deleteFood(id: string) {
@@ -158,6 +180,7 @@ export class HomePage {
           text: 'Aceptar',
           handler: () => {
             this.deleteFood(f.id);
+            this.foodsService.deleteRealtimeFood(f);
           }
         }
       ]

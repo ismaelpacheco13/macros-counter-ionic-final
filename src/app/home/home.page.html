@@ -17,6 +17,9 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-item>
+    <ion-datetime [(ngModel)]="date" (ngModelChange)="changeDate()" display-format="MMM DD, YYYY"></ion-datetime>
+  </ion-item>
 
   <ion-grid class="ion-text-center">
     {{ kcal.toFixed(0) }} / {{ kcalMax.toFixed(0) }} kcal

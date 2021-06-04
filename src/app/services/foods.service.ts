@@ -89,21 +89,21 @@ export class FoodsService {
       }
     ]; */
 
-    this.getBreakFastFromStorage().then( // Persistencia
-      data => this.breakfast = data
-    );
+    // this.getBreakFastFromStorage().then( // Persistencia
+    //   data => this.breakfast = data
+    // );
 
-    this.getLunchFromStorage().then( // Persistencia
-      data => this.lunch = data
-    );
+    // this.getLunchFromStorage().then( // Persistencia
+    //   data => this.lunch = data
+    // );
 
-    this.getDinnerFromStorage().then( // Persistencia
-      data => this.dinner = data
-    );
+    // this.getDinnerFromStorage().then( // Persistencia
+    //   data => this.dinner = data
+    // );
 
-    this.getFoodCounterFromStorage().then( // Persistencia
-      data => this.foodCounter = data
-    );
+    // this.getFoodCounterFromStorage().then( // Persistencia
+    //   data => this.foodCounter = data
+    // );
 
   }
 
@@ -131,25 +131,25 @@ export class FoodsService {
     return this.breakfast;
   }
 
-  public async getBreakFastFromStorage(): Promise<Food[]> { // Persistencia
-    const ret = await Storage.get({ key: 'breakfast' });
-    return JSON.parse(ret.value) ? JSON.parse(ret.value) : [];
-  }
+  // public async getBreakFastFromStorage(): Promise<Food[]> { // Persistencia
+  //   const ret = await Storage.get({ key: 'breakfast' });
+  //   return JSON.parse(ret.value) ? JSON.parse(ret.value) : [];
+  // }
 
-  public async getLunchFromStorage(): Promise<Food[]> { // Persistencia
-    const ret = await Storage.get({ key: 'lunch' });
-    return JSON.parse(ret.value) ? JSON.parse(ret.value) : [];
-  }
+  // public async getLunchFromStorage(): Promise<Food[]> { // Persistencia
+  //   const ret = await Storage.get({ key: 'lunch' });
+  //   return JSON.parse(ret.value) ? JSON.parse(ret.value) : [];
+  // }
 
-  public async getDinnerFromStorage(): Promise<Food[]> { // Persistencia
-    const ret = await Storage.get({ key: 'dinner' });
-    return JSON.parse(ret.value) ? JSON.parse(ret.value) : [];
-  }
+  // public async getDinnerFromStorage(): Promise<Food[]> { // Persistencia
+  //   const ret = await Storage.get({ key: 'dinner' });
+  //   return JSON.parse(ret.value) ? JSON.parse(ret.value) : [];
+  // }
 
-  public async getFoodCounterFromStorage(): Promise<number> {
-    const { value } = await Storage.get({ key: 'foodCounter' });
-    return value ? +value : 0;
-  }
+  // public async getFoodCounterFromStorage(): Promise<number> {
+  //   const { value } = await Storage.get({ key: 'foodCounter' });
+  //   return value ? +value : 0;
+  // }
 
   public getLunch(): Food[] {
     return this.lunch;
@@ -159,61 +159,63 @@ export class FoodsService {
     return this.dinner;
   }
 
-  public async saveFood(f: Food) {
+  public async saveFood(f: Food, date: string) {
     if (f.id == undefined) { // Comida nueva
       f.id = uuidv4();
-      if (f.typeOfFood != undefined) {
-        if (f.typeOfFood == "breakfast") {
-          this.breakfast.push(f);
-        } else if (f.typeOfFood == "lunch") {
-          this.lunch.push(f);
-        } else {
-          this.dinner.push(f);
-        }
-      }
+      f.date = date;
+      // if (f.typeOfFood != undefined) {
+      //   if (f.typeOfFood == "breakfast") {
+      //     this.breakfast.push(f);
+      //   } else if (f.typeOfFood == "lunch") {
+      //     this.lunch.push(f);
+      //   } else {
+      //     this.dinner.push(f);
+      //   }
+      // }
       
     } else { // Edición de una comida
       this.deleteFood(f.id);
-      if (f.typeOfFood != undefined) {
-        if (f.typeOfFood == "breakfast") {
-          this.breakfast.push(f);
-        } else if (f.typeOfFood == "lunch") {
-          this.lunch.push(f);
-        } else {
-          this.dinner.push(f);
-        }
-      }
+      this.deleteRealtimeFood(f);
+      // if (f.typeOfFood != undefined) {
+      //   if (f.typeOfFood == "breakfast") {
+      //     this.breakfast.push(f);
+      //   } else if (f.typeOfFood == "lunch") {
+      //     this.lunch.push(f);
+      //   } else {
+      //     this.dinner.push(f);
+      //   }
+      // }
     }
 
-    await this.saveFoods(this.breakfast, this.lunch, this.dinner);
-    await this.saveFoodCounter(this.foodCounter);
+    // await this.saveFoods(this.breakfast, this.lunch, this.dinner);
+    // await this.saveFoodCounter(this.foodCounter);
     await this.createRealtimeFood(f);
 
   }
 
-  public async saveFoods(breakfast: Food[], lunch: Food[], dinner: Food[]) { // Persistencia
-    await Storage.set({
-      key: 'breakfast',
-      value: JSON.stringify(breakfast)
-    });
+  // public async saveFoods(breakfast: Food[], lunch: Food[], dinner: Food[]) { // Persistencia
+  //   await Storage.set({
+  //     key: 'breakfast',
+  //     value: JSON.stringify(breakfast)
+  //   });
 
-    await Storage.set({
-      key: 'lunch',
-      value: JSON.stringify(lunch)
-    });
+  //   await Storage.set({
+  //     key: 'lunch',
+  //     value: JSON.stringify(lunch)
+  //   });
 
-    await Storage.set({
-      key: 'dinner',
-      value: JSON.stringify(dinner)
-    });
-  }
+  //   await Storage.set({
+  //     key: 'dinner',
+  //     value: JSON.stringify(dinner)
+  //   });
+  // }
 
-  public async saveFoodCounter(fc: number) {
-    await Storage.set({
-      key: 'foodCounter',
-      value: '' + fc
-    });
-  }
+  // public async saveFoodCounter(fc: number) {
+  //   await Storage.set({
+  //     key: 'foodCounter',
+  //     value: '' + fc
+  //   });
+  // }
 
   public async deleteFood(id: string) {
     if (this.breakfast.find(f => f.id === id)) {
@@ -224,23 +226,59 @@ export class FoodsService {
       this.dinner = this.dinner.filter(f => f.id != id);
     }
 
-    await this.saveFoods(this.breakfast, this.lunch, this.dinner);
+    // await this.saveFoods(this.breakfast, this.lunch, this.dinner);
   }
 
   // Realtime Database (Firebase)
   public createRealtimeFood(f: Food) {
     let uid = this.ngFireAuth.auth.currentUser.uid;
-    let time = new Date().toDateString();
-    // this.foodListRef = this.db.list('/' + uid + '/' + time + '/food' + '/' + f.typeOfFood + '/' + f.id);
-    this.foodListRef = this.db.list(`/${uid}/${time}/food/${f.typeOfFood}/${f.id}`);
-    return this.foodListRef.push(f);
+    this.foodListRef = this.db.list(`/${uid}/food/${f.date}/${f.typeOfFood}/`);
+    return this.foodListRef.set(f.id, f);
   }
 
   public deleteRealtimeFood(f: Food) {
     let uid = this.ngFireAuth.auth.currentUser.uid;
-    let time = new Date().toDateString(); // HAY QUE ARREGLARLO Y SELECCIONAR LA FECHA QUE ESTA SELECCIONADA EN EL FUTURO CALENDARIO DE LA APP Y NO LA FECHA ACTUAL
-    this.foodRef = this.db.object('/' + uid + '/' + time + '/food' + '/' + f.typeOfFood + '/' + f.id);
+    this.foodRef = this.db.object(`/${uid}/food/${f.date}/${f.typeOfFood}/${f.id}`);
     return this.foodRef.remove();
+  }
+
+  public getRealtimeFoodBreakfastList() {
+    this.breakfast = [];
+    let uid = this.ngFireAuth.auth.currentUser.uid;
+    let date = localStorage.getItem('date');
+    this.foodListRef = this.db.list(`/${uid}/food/${date}/breakfast/`);
+    return this.foodListRef.valueChanges().subscribe(res => {
+      res.forEach(item => {
+        this.breakfast.push(item);
+        console.log(item);
+      })
+    })
+  }
+
+  public getRealtimeFoodLunchList() {
+    this.lunch = [];
+    let uid = this.ngFireAuth.auth.currentUser.uid;
+    let date = localStorage.getItem('date');
+    this.foodListRef = this.db.list(`/${uid}/food/${date}/lunch/`);
+    return this.foodListRef.valueChanges().subscribe(res => {
+      res.forEach(item => {
+        this.lunch.push(item);
+        console.log(item);
+      })
+    })
+  }
+
+  public getRealtimeFoodDinnerList() {
+    this.dinner = [];
+    let uid = this.ngFireAuth.auth.currentUser.uid;
+    let date = localStorage.getItem('date');
+    this.foodListRef = this.db.list(`/${uid}/food/${date}/dinner/`);
+    return this.foodListRef.valueChanges().subscribe(res => {
+      res.forEach(item => {
+        this.dinner.push(item);
+        console.log(item);
+      })
+    })
   }
 
 }

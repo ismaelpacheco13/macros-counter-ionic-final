@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { auth } from 'firebase/app';
 import { AuthenticationService } from "../../shared/authentication-service";
 
 @Component({
@@ -20,9 +21,14 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if(this.authService.isLoggedIn) {
-      this.router.navigate(['home']);
-    }
+    // if(this.authService.isLoggedIn) {
+    //   this.router.navigate(['home']);
+    // }
+    auth().onAuthStateChanged(user => {
+      if (user) {
+        this.router.navigate(['home']);
+      }
+    })
   }
 
   logIn(email, password) {

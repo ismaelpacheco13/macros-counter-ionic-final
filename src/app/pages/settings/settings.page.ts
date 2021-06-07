@@ -38,7 +38,7 @@ export class SettingsPage implements OnInit {
 
   saveSettings() {
     this.settingsService.saveSettings(this.setting);
-    this.router.navigateByUrl('/');
+    this.router.navigate(['home']);
   }
 
 }

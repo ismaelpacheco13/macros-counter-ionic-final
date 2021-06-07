@@ -36,14 +36,10 @@ export class HomePage {
     private settingsService: SettingsService,
     private alertController: AlertController,
     private router: Router,
-    public authService: AuthenticationService
+    public authService: AuthenticationService,
   ) {}
 
   ngOnInit() {
-    this.breakfast = this.foodsService.getBreakfast();
-    this.lunch = this.foodsService.getLunch();
-    this.dinner = this.foodsService.getDinner();
-
     this.date = new Date().toISOString();
     this.date = this.date.split('T')[0];
     localStorage.setItem('date', this.date);
@@ -52,20 +48,9 @@ export class HomePage {
   ionViewWillEnter() {
     if(!this.authService.isLoggedIn) { 
       this.router.navigate(['login']);
-    } else {
-      this.foodsService.getRealtimeFoodBreakfastList();
-      this.foodsService.getRealtimeFoodLunchList();
-      this.foodsService.getRealtimeFoodDinnerList();
     }
-    
-    this.breakfast = this.foodsService.getBreakfast();
-    this.lunch = this.foodsService.getLunch();
-    this.dinner = this.foodsService.getDinner();
 
-    this.updateMacros();
-    this.updateMacrosMax();
-    this.updateProgressBars();
-    
+    this.getFoods();
   }
 
   async goEditFood(id: string) {
@@ -77,13 +62,7 @@ export class HomePage {
     this.date = this.date.split('T')[0];
     localStorage.setItem('date', this.date);
 
-    this.foodsService.getRealtimeFoodBreakfastList();
-    this.foodsService.getRealtimeFoodLunchList();
-    this.foodsService.getRealtimeFoodDinnerList();
-
-    this.breakfast = this.foodsService.getBreakfast();
-    this.lunch = this.foodsService.getLunch();
-    this.dinner = this.foodsService.getDinner();
+    this.getFoods();
   }
 
   deleteFood(id: string) {
@@ -189,4 +168,21 @@ export class HomePage {
     await alert.present();
   }
 
+  public getFoods() {
+    setTimeout(() => {
+      this.foodsService.getRealtimeFoodBreakfastList();
+      this.foodsService.getRealtimeFoodLunchList();
+      this.foodsService.getRealtimeFoodDinnerList();
+
+      setTimeout(() => {
+        this.breakfast = this.foodsService.getBreakfast();
+        this.lunch = this.foodsService.getLunch();
+        this.dinner = this.foodsService.getDinner();
+  
+        this.updateMacros();
+        this.updateMacrosMax();
+        this.updateProgressBars();
+      }, 100);
+    }, 500);
+  }
 }

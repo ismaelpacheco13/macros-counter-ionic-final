@@ -30,7 +30,7 @@ export class EditPage implements OnInit {
 
   saveFood() {
     this.foodsService.saveFood(this.food, this.date);
-    this.router.navigateByUrl('/');
+    this.router.navigate(['home']);
   }
 
 }

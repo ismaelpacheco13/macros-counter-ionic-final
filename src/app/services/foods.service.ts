@@ -250,7 +250,6 @@ export class FoodsService {
     return this.foodListRef.valueChanges().subscribe(res => {
       res.forEach(item => {
         this.breakfast.push(item);
-        console.log(item);
       })
     })
   }
@@ -263,7 +262,6 @@ export class FoodsService {
     return this.foodListRef.valueChanges().subscribe(res => {
       res.forEach(item => {
         this.lunch.push(item);
-        console.log(item);
       })
     })
   }
@@ -276,7 +274,6 @@ export class FoodsService {
     return this.foodListRef.valueChanges().subscribe(res => {
       res.forEach(item => {
         this.dinner.push(item);
-        console.log(item);
       })
     })
   }

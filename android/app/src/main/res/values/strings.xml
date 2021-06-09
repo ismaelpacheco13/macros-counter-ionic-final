@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Macros-Counter</string>
     <string name="title_activity_main">Macros-Counter</string>
-    <string name="package_name">com.example.app</string>
-    <string name="custom_url_scheme">com.example.app</string>
+    <string name="package_name">com.ismael.macros</string>
+    <string name="custom_url_scheme">com.ismael.macros</string>
+    <string name="server_client_id">546018831522-u97u187j4c9lbu3b0tu47kjc3pe1h76l.apps.googleusercontent.com</string>
 </resources>

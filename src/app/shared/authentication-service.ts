@@ -4,6 +4,7 @@ import { User } from "./user";
 import { Router } from "@angular/router";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,8 @@ export class AuthenticationService {
     public router: Router,  
     public ngZone: NgZone
   ) {
+    GoogleAuth.init();
+
     this.ngFireAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
@@ -72,7 +75,14 @@ export class AuthenticationService {
 
   // Sign in with Gmail
   GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
+    // return this.AuthLogin(new auth.GoogleAuthProvider());
+    return this.googleSignIn();
+  }
+
+  async googleSignIn() {
+    let googleUser = await GoogleAuth.signIn();
+    const credential = auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+    return this.ngFireAuth.auth.signInAndRetrieveDataWithCredential(credential);
   }
 
   // Sign in with Twitter

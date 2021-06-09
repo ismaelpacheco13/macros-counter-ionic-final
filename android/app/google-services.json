@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "546018831522",
+    "firebase_url": "https://macroscounter-final-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "macroscounter-final",
+    "storage_bucket": "macroscounter-final.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546018831522:android:aee2884a4bbe1971f3bbfb",
+        "android_client_info": {
+          "package_name": "com.ismael.macros"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546018831522-np5nhkt8cefolico9i53iroufuia3jis.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ismael.macros",
+            "certificate_hash": "7078ee57ede2da668795b6bea5f951f2eade90dd"
+          }
+        },
+        {
+          "client_id": "546018831522-u97u187j4c9lbu3b0tu47kjc3pe1h76l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARv2BLZISoqUnyAlmqD6lhF9J7s6kDxD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546018831522-u97u187j4c9lbu3b0tu47kjc3pe1h76l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -30,13 +30,13 @@
     </ion-row>
 
     <ion-row>
-      <ion-col>
-        <ion-button color="danger" (click)="authService.GoogleAuth()" expand="block">
+      <ion-col class="ion-text-center">
+        <ion-button color="danger" (click)="authService.GoogleAuth()">
           <ion-icon slot="start" name="logo-google"></ion-icon>
-          
+          Iniciar Sesión con Google
         </ion-button>
       </ion-col>
-      <ion-col>
+      <!-- <ion-col>
         <ion-button type="submit" color="danger" (click)="authService.FacebookAuth()" expand="block">
           <ion-icon slot="start" name="logo-facebook"></ion-icon>
           
@@ -47,7 +47,7 @@
           <ion-icon slot="start" name="logo-twitter"></ion-icon>
           
         </ion-button>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
   </form>
 </ion-content>

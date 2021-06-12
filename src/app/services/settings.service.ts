@@ -118,7 +118,9 @@ export class SettingsService {
     let uid = this.ngFireAuth.auth.currentUser.uid;
     this.settingRef = this.db.object(`/${uid}/settings/${uid}`);
     return this.settingRef.valueChanges().subscribe(res => {
-      this.setting = res;
+      if (res != null) {
+        this.setting = res;
+      }
     });
   }
 }

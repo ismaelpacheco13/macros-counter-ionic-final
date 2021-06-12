@@ -182,7 +182,7 @@ export class HomePage {
         this.updateMacros();
         this.updateMacrosMax();
         this.updateProgressBars();
-      }, 100);
-    }, 500);
+      }, 200);
+    }, 600);
   }
 }

@@ -8,4 +8,5 @@ export class Food {
     carbs: number;
     fats: number;
     typeOfFood?: string;
+    deletedFromFavourites?: boolean;
 }

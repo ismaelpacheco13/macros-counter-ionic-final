@@ -26,9 +26,7 @@ export class SettingsService {
   ) {
     this.ngFireAuth.authState.subscribe(user => {
       if (user) {
-        this.getRealtimeSettings();
-      } else {
-        
+        console.log(user.uid);
       }
     })
     // this.getSettingFromStorage().then(
@@ -87,7 +85,6 @@ export class SettingsService {
     this.setting = s;
 
     this.saveRealtimeSettings(this.setting);
-    this.getRealtimeSettings();
 
 
     // await this.saveSetting(this.setting);
@@ -112,15 +109,18 @@ export class SettingsService {
     // this.settingListRef.update(key, s); // Guardamos la key del push dentro del objeto y la updateamos a la bd
   }
 
-  public getRealtimeSettings() {
+  public async getRealtimeSettings(): Promise<Setting> {
     // const user = JSON.parse(localStorage.getItem('user'));
     // let uid = user.uid;
+    let setting: Setting;
     let uid = this.ngFireAuth.auth.currentUser.uid;
-    this.settingRef = this.db.object(`/${uid}/settings/${uid}`);
-    return this.settingRef.valueChanges().subscribe(res => {
-      if (res != null) {
-        this.setting = res;
-      }
-    });
+    await this.db.database.ref().child(`/${uid}/settings/${uid}`)
+      .once('value')
+      .then(snapshot => {
+        if (snapshot.val() != null) {
+          setting = snapshot.val();
+        }
+      });
+    return setting;
   }
 }

@@ -34,7 +34,11 @@ const routes: Routes = [
   {
     path: 'verify-email',
     loadChildren: () => import('./pages/verify-email/verify-email.module').then( m => m.VerifyEmailPageModule)
+  },  {
+    path: 'favourite',
+    loadChildren: () => import('./pages/favourite/favourite.module').then( m => m.FavouritePageModule)
   },
+
 ];
 
 @NgModule({

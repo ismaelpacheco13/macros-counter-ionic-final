@@ -33,12 +33,20 @@ export class SettingsPage implements OnInit {
       this.router.navigate(['login']);
     }
     
-    this.setting = this.settingsService.getSetting();
+    this.ngFireAuth.authState.subscribe(user => {
+      if (user) {
+        this.getSetting();
+      }
+    })
   }
 
   saveSettings() {
     this.settingsService.saveSettings(this.setting);
     this.router.navigate(['home']);
+  }
+
+  async getSetting() {
+    this.setting = await this.settingsService.getRealtimeSettings();
   }
 
 }

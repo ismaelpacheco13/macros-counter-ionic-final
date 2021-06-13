@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Food } from '../model/food';
@@ -37,6 +38,7 @@ export class HomePage {
     private alertController: AlertController,
     private router: Router,
     public authService: AuthenticationService,
+    public ngFireAuth: AngularFireAuth
   ) {}
 
   ngOnInit() {
@@ -50,7 +52,11 @@ export class HomePage {
       this.router.navigate(['login']);
     }
 
-    this.getFoods();
+    this.ngFireAuth.authState.subscribe(user => { // Espera a que cargue el uid antes de cargar las comidas
+      if (user) {
+        this.getFoods();
+      }
+    })
   }
 
   async goEditFood(id: string) {
@@ -61,21 +67,13 @@ export class HomePage {
     
     this.date = this.date.split('T')[0];
     localStorage.setItem('date', this.date);
+    console.log('fecha cambiada');
 
-    this.getFoods();
-  }
-
-  deleteFood(id: string) {
-    this.foodsService.deleteFood(id);
-    if (this.breakfast.find(f => f.id === id)) {
-      this.breakfast = this.foodsService.getBreakfast();
-    } else if (this.lunch.find(f => f.id === id)) {
-      this.lunch = this.foodsService.getLunch();
-    } else {
-      this.dinner = this.foodsService.getDinner();
-    }
-    this.updateMacros();
-    this.updateProgressBars();
+    this.ngFireAuth.authState.subscribe(user => {
+      if (user) {
+        this.getFoods();
+      }
+    })
   }
 
   updateMacros() {
@@ -106,8 +104,8 @@ export class HomePage {
     });
   }
 
-  updateMacrosMax() {
-    this.setting = this.settingsService.getSetting();
+  async updateMacrosMax() {
+    this.setting = await this.settingsService.getRealtimeSettings();
     this.kcalMax = this.setting.kcal;
     this.proteinMax = this.setting.protein;
     this.carbsMax = this.setting.carbs;
@@ -138,6 +136,7 @@ export class HomePage {
         }, {
           text: 'Editar',
           handler: () => {
+            localStorage.setItem('food', JSON.stringify(f));
             this.goEditFood(f.id);
           }
         }
@@ -158,8 +157,8 @@ export class HomePage {
         }, {
           text: 'Aceptar',
           handler: () => {
-            this.deleteFood(f.id);
             this.foodsService.deleteRealtimeFood(f);
+            this.getFoods();
           }
         }
       ]
@@ -168,21 +167,16 @@ export class HomePage {
     await alert.present();
   }
 
-  public getFoods() {
-    setTimeout(() => {
-      this.foodsService.getRealtimeFoodBreakfastList();
-      this.foodsService.getRealtimeFoodLunchList();
-      this.foodsService.getRealtimeFoodDinnerList();
+  async getFoods() {
+    this.breakfast = [];
+    this.lunch = [];
+    this.dinner = [];
+    await this.foodsService.getRealtimeFoodBreakfastList(this.breakfast);
+    await this.foodsService.getRealtimeFoodLunchList(this.lunch);
+    await this.foodsService.getRealtimeFoodDinnerList(this.dinner);
 
-      setTimeout(() => {
-        this.breakfast = this.foodsService.getBreakfast();
-        this.lunch = this.foodsService.getLunch();
-        this.dinner = this.foodsService.getDinner();
-  
-        this.updateMacros();
-        this.updateMacrosMax();
-        this.updateProgressBars();
-      }, 200);
-    }, 600);
+    this.updateMacros();
+    await this.updateMacrosMax();
+    this.updateProgressBars();
   }
 }

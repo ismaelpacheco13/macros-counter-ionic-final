@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="edit"></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  
+
+  <ion-list *ngIf="favourite.length > 0">
+    <ion-list-header>Tus comidas</ion-list-header>
+    <ion-item *ngFor="let food of favourite">
+      <ion-label (click)="presentAlert(food)">
+        <h2>{{ food.name }}</h2>
+        <ion-note>C: {{ food.carbs }}g, P: {{ food.protein }}g, G: {{ food.fats }}g / {{ food.grml }}gr</ion-note>
+      </ion-label>
+      <ion-icon name="trash" (click)="presentAlertConfirm(food)"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Food } from 'src/app/model/food';
 import { FoodsService } from 'src/app/services/foods.service';
@@ -16,14 +17,17 @@ export class EditPage implements OnInit {
   constructor(
     private foodsService: FoodsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public ngFireAuth: AngularFireAuth
   ) { }
 
   ngOnInit() {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if (id != null) {
-      this.food = this.foodsService.getSingleFood(id);
-    }
+
+    this.ngFireAuth.authState.subscribe(user => {
+      if (user) {
+        this.getFood();
+      }
+    })
 
     this.date = localStorage.getItem('date');
   }
@@ -31,6 +35,14 @@ export class EditPage implements OnInit {
   saveFood() {
     this.foodsService.saveFood(this.food, this.date);
     this.router.navigate(['home']);
+  }
+
+  async getFood() {
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    if (id != null) {
+      this.food = JSON.parse(localStorage.getItem('food'));
+      console.log(this.food);
+    }
   }
 
 }

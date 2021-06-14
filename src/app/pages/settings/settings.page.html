@@ -4,6 +4,10 @@
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end" class="ion-padding">
+      <ion-button *ngIf="admins.includes(userUID)" routerLink="/admin">
+        <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
+        ADMIN
+      </ion-button>
       <ion-button (click)="authService.SignOut()">
         <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
@@ -41,10 +45,10 @@
       <ion-label>Actividad Física</ion-label>
       <ion-select [(ngModel)]="setting.physicalActivity">
         <ion-select-option value="sedentario">Sedentario (Poco o nada de ejercicio)</ion-select-option>
-        <ion-select-option value="leve">Levemente activo (Deporte 1-3 veces por semana)</ion-select-option>
-        <ion-select-option value="moderado">Moderadamente activo (Deporte 3-5 veces por semana)</ion-select-option>
-        <ion-select-option value="activo">Muy activo (Deporte 6-7 veces por semana)</ion-select-option>
-        <ion-select-option value="hiperactivo">Hiperactivo (Deporte todos los días + de 2h)</ion-select-option>
+        <ion-select-option value="leve">Levemente activo (1-3 veces por semana)</ion-select-option>
+        <ion-select-option value="moderado">Moderadamente activo (3-5 veces por semana)</ion-select-option>
+        <ion-select-option value="activo">Muy activo (6-7 veces por semana)</ion-select-option>
+        <ion-select-option value="hiperactivo">Hiperactivo (todos los días + de 2h)</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -62,4 +66,27 @@
     <br>
     <ion-button expand="full" (click)="saveSettings()">Guardar</ion-button>
   </ion-list>
+
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+  
+      <ion-tab-button routerLink="/settings" routerLinkActive="active-item">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/edit" routerLinkActive="active-item">
+        <ion-icon name="add-circle"></ion-icon>
+        <ion-label>Añadir comida</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/favourite" routerLinkActive="active-item">
+        <ion-icon name="star"></ion-icon>
+        <ion-label>Comidas favoritas</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

@@ -26,7 +26,6 @@ export class SettingsService {
   ) {
     this.ngFireAuth.authState.subscribe(user => {
       if (user) {
-        console.log(user.uid);
       }
     })
     // this.getSettingFromStorage().then(

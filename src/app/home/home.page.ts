@@ -45,16 +45,20 @@ export class HomePage {
     this.date = new Date().toISOString();
     this.date = this.date.split('T')[0];
     localStorage.setItem('date', this.date);
+
+    this.ngFireAuth.authState.subscribe(user => {
+      if (user) {
+        this.authService.createRealtimeUser(user);
+      }
+    })
   }
 
   ionViewWillEnter() {
-    if(!this.authService.isLoggedIn) { 
-      this.router.navigate(['login']);
-    }
-
     this.ngFireAuth.authState.subscribe(user => { // Espera a que cargue el uid antes de cargar las comidas
       if (user) {
         this.getFoods();
+      } else {
+        this.router.navigate(['login']);
       }
     })
   }
@@ -106,10 +110,12 @@ export class HomePage {
 
   async updateMacrosMax() {
     this.setting = await this.settingsService.getRealtimeSettings();
-    this.kcalMax = this.setting.kcal;
-    this.proteinMax = this.setting.protein;
-    this.carbsMax = this.setting.carbs;
-    this.fatsMax = this.setting.fats;
+    if (this.setting) {
+      this.kcalMax = this.setting.kcal;
+      this.proteinMax = this.setting.protein;
+      this.carbsMax = this.setting.carbs;
+      this.fatsMax = this.setting.fats;
+    }
   }
 
   updateProgressBars() {
@@ -149,7 +155,7 @@ export class HomePage {
   async presentAlertConfirm(f: Food) {
     const alert = await this.alertController.create({
       header: 'Borrar comida',
-      message: `¿Estás seguro que quieres borrar la tarea <strong>${f.name}</strong>?`,
+      message: `¿Estás seguro que quieres borrar la comida <strong>${f.name}</strong>?`,
       buttons: [
         {
           text: 'Cancelar',

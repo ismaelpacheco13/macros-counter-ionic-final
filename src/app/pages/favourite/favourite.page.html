@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" class="ion-padding">
       <ion-back-button defaultHref="edit"></ion-back-button>
     </ion-buttons>
     <ion-title></ion-title>
@@ -22,3 +22,25 @@
   </ion-list>
 
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+  
+      <ion-tab-button routerLink="/settings" routerLinkActive="active-item">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/edit" routerLinkActive="active-item">
+        <ion-icon name="add-circle"></ion-icon>
+        <ion-label>Añadir comida</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/favourite" routerLinkActive="active-item">
+        <ion-icon name="star"></ion-icon>
+        <ion-label>Comidas favoritas</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

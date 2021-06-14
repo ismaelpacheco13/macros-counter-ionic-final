@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,14 @@ import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 export class AuthenticationService {
   userData: any;
+  userListRef: AngularFireList<any>;
+  userRef: AngularFireObject<any>;
+
+  admins: String[];
 
   constructor(
     public afStore: AngularFirestore,
+    private db: AngularFireDatabase,
     public ngFireAuth: AngularFireAuth,
     public router: Router,  
     public ngZone: NgZone
@@ -134,6 +140,43 @@ export class AuthenticationService {
       localStorage.removeItem('user');
       this.router.navigate(['login']);
     })
+  }
+
+  // Create user in Realtime Database (Se ejecuta cada vez que el usuario llega al homepage al iniciar sesión (para actualizar la ultima conexión))
+  public async createRealtimeUser(user) {
+    await this.getRealtimeAdminList();
+    let userParsed = JSON.parse(JSON.stringify(user));
+    this.userListRef = this.db.list(`/admin/users/`);
+    let date = new Date(Number(userParsed.lastLoginAt));
+    userParsed.lastLoginString = date.toLocaleString('es-ES', {timeZone: 'Europe/Madrid'}); // Para tener la última conexión del usuario como un String con hora local
+    if (this.admins.includes(userParsed.uid)) {
+      userParsed.isAdmin = true;
+    } else {
+      userParsed.isAdmin = false;
+    }
+    return this.userListRef.set(user.uid, userParsed);
+  }
+
+  public async getRealtimeAdminList(): Promise<String[]> { // Busca la lista de admins de la aplicación en Realtime Database
+    this.admins = [];
+    await this.db.database.ref().child(`/admin/list`)
+      .once('value')
+      .then(snapshot => {
+        snapshot.forEach(item => {
+          this.admins.push(item.val());
+        })
+      });
+    return this.admins;
+  }
+
+  public setRealtimeAdmin(uid: string) {
+    this.userListRef = this.db.list(`/admin/list/`);
+    return this.userListRef.set(uid, uid);
+  }
+
+  public deleteRealtimeAdmin(uid: string) {
+    this.userRef = this.db.object(`/admin/list/${uid}`);
+    return this.userRef.remove();
   }
 
 }

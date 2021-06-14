@@ -38,6 +38,10 @@ const routes: Routes = [
     path: 'favourite',
     loadChildren: () => import('./pages/favourite/favourite.module').then( m => m.FavouritePageModule)
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule)
+  },
 
 ];
 

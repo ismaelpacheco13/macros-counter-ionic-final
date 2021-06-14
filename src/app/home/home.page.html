@@ -18,6 +18,7 @@
 
 <ion-content class="ion-padding">
   <ion-item>
+    <ion-icon class="ion-margin-end" name="calendar-outline"></ion-icon>
     <ion-datetime [(ngModel)]="date" (ngModelChange)="changeDate()" display-format="DD MMM, YYYY" pickerFormat="DD MMM, YYYY"></ion-datetime>
   </ion-item>
 
@@ -51,7 +52,10 @@
   <ion-list *ngIf="breakfast.length > 0">
     <ion-list-header>Desayuno</ion-list-header>
     <ion-item *ngFor="let food of breakfast">
-      <ion-label (click)="presentAlert(food)">{{ food.name }}</ion-label>
+      <ion-label (click)="presentAlert(food)">
+        <h2>{{ food.name }}</h2>
+        <ion-note>C: {{ food.carbs }}g, P: {{ food.protein }}g, G: {{ food.fats }}g / {{ food.grml }}gr</ion-note>
+      </ion-label>
       <ion-icon name="trash" (click)="presentAlertConfirm(food)"></ion-icon>
     </ion-item>
   </ion-list>
@@ -59,7 +63,10 @@
   <ion-list *ngIf="lunch.length > 0">
     <ion-list-header>Almuerzo</ion-list-header>
     <ion-item *ngFor="let food of lunch">
-      <ion-label (click)="presentAlert(food)">{{ food.name }}</ion-label>
+      <ion-label (click)="presentAlert(food)">
+        <h2>{{ food.name }}</h2>
+        <ion-note>C: {{ food.carbs }}g, P: {{ food.protein }}g, G: {{ food.fats }}g / {{ food.grml }}gr</ion-note>
+      </ion-label>
       <ion-icon name="trash" (click)="presentAlertConfirm(food)"></ion-icon>
     </ion-item>
   </ion-list>
@@ -67,7 +74,10 @@
   <ion-list *ngIf="dinner.length > 0">
     <ion-list-header>Cena</ion-list-header>
     <ion-item *ngFor="let food of dinner">
-      <ion-label (click)="presentAlert(food)">{{ food.name }}</ion-label>
+      <ion-label (click)="presentAlert(food)">
+        <h2>{{ food.name }}</h2>
+        <ion-note>C: {{ food.carbs }}g, P: {{ food.protein }}g, G: {{ food.fats }}g / {{ food.grml }}gr</ion-note>
+      </ion-label>
       <ion-icon name="trash" (click)="presentAlertConfirm(food)"></ion-icon>
     </ion-item>
   </ion-list>
@@ -76,3 +86,25 @@
   {{ lunch | json }}<br>
   {{ dinner | json }} -->
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+  
+      <ion-tab-button routerLink="/settings" routerLinkActive="active-item">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/edit" routerLinkActive="active-item">
+        <ion-icon name="add-circle"></ion-icon>
+        <ion-label>Añadir comida</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/favourite" routerLinkActive="active-item">
+        <ion-icon name="star"></ion-icon>
+        <ion-label>Comidas favoritas</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

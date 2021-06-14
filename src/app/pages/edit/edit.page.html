@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button routerLink="/favourite">MIS COMIDAS</ion-button>
+      <!-- <ion-button routerLink="/favourite">MIS COMIDAS</ion-button> -->
     </ion-buttons>
     <!-- <ion-title>Editar / Añadir Comidas</ion-title> -->
   </ion-toolbar>
@@ -54,3 +54,25 @@
   <ion-button expand="full" (click)="saveFood()">Guardar</ion-button>
 
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+  
+      <ion-tab-button routerLink="/settings" routerLinkActive="active-item">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-tab-button>
+  
+      <!-- <ion-tab-button routerLink="/edit" routerLinkActive="active-item">
+        <ion-icon name="add-circle"></ion-icon>
+        <ion-label>Añadir comida</ion-label>
+      </ion-tab-button> -->
+  
+      <ion-tab-button routerLink="/favourite" routerLinkActive="active-item">
+        <ion-icon name="star"></ion-icon>
+        <ion-label>Comidas favoritas</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

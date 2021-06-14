@@ -1,21 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>verify-email</ion-title>
+    <ion-title>Verificación de email</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <ion-grid>
     <ion-row>
-      <h2>Ionic 5 Firebase Verify Email</h2>
-      <p>
-        Please check your email and click on the link to verfiy your email address.
-      </p>
       <ion-button type="submit" (click)="authService.SendVerificationMail()" expand="block">
-        Resend Verification Email
+        Reenviar email de verificación
+      </ion-button>
+      <ion-button routerLink="/login" expand="block">
+        Iniciar sesión
       </ion-button>
     </ion-row>
   </ion-grid>

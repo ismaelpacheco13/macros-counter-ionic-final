@@ -16,6 +16,9 @@ export class SettingsPage implements OnInit {
   setting: Setting = {age: 0, height: 0, weight: 0, sex: "", physicalActivity: ""
                      ,kcal: 0, bmr: 0, protein: 0, carbs: 0, fats: 0};
 
+  userUID: string;
+  admins: String[] = [];
+
   constructor(
     private settingsService: SettingsService,
     private router: Router,
@@ -25,19 +28,20 @@ export class SettingsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    
   }
 
   ionViewWillEnter() {
-    if(!this.authService.isLoggedIn) {
-      this.router.navigate(['login']);
-    }
-    
-    this.ngFireAuth.authState.subscribe(user => {
+    this.ngFireAuth.authState.subscribe(async user => {
       if (user) {
-        this.getSetting();
+        await this.getSetting();
+        await this.getAdmins();
+        this.userUID = user.uid;
+      } else {
+        this.router.navigate(['login']);
       }
     })
+
+    
   }
 
   saveSettings() {
@@ -46,7 +50,15 @@ export class SettingsPage implements OnInit {
   }
 
   async getSetting() {
-    this.setting = await this.settingsService.getRealtimeSettings();
+    if (await this.settingsService.getRealtimeSettings()) { // Si existen las settings (ya se han creado anteriormente)
+      this.setting = await this.settingsService.getRealtimeSettings();
+    }
+  }
+
+  async getAdmins() {
+    if (await this.authService.getRealtimeAdminList()) { // Si existen los admins (ya se han creado anteriormente)
+      this.admins = await this.authService.getRealtimeAdminList();
+    }
   }
 
 }

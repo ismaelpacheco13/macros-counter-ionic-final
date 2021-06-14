@@ -24,3 +24,12 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.active-item {
+    --color: var(--ion-color-primary);
+}
+
+.alert-wrapper{
+    max-width: unset !important;
+    width: 85% !important;
+}

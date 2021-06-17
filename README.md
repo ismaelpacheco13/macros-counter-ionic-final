@@ -1,8 +1,8 @@
 # Macros Counter
 
 <p align="center">
-  <img src="media-readme/logo.png" alt="logo" width="200" height="200">
-  [Landing Page](https://ismaelpacheco13.github.io/macros-counter-ionic-final-landing-page/)
+  <img src="media-readme/logo.png" alt="logo" width="200" height="200">< /br>
+  <a href="https://ismaelpacheco13.github.io/macros-counter-ionic-final-landing-page/">Landing Page</a>
 </p>
 
 # Sobre el proyecto
@@ -88,13 +88,3 @@ La presentación en PDF se encuentra [aquí](media-readme/presentacion.pdf).
 - [PositronX.io (Firebase Realtime Database)](https://www.positronx.io/build-ionic-firebase-crud-app-with-angular/) + muchos post de stackoverflow para arreglar bugs de versiones, algunos métodos, etc..
 - [Codetrix (Capacitor-Google-Auth)](https://www.npmjs.com/package/@codetrix-studio/capacitor-google-auth)
 - [StackOverflow (Various Bugs Fixes)](https://es.stackoverflow.com/)
-
-
-# Objetivos
-
-Crear una app funcional con la que se pueda llevar un recuento diario de todas las comidas:
-
-- Cuente con una base de datos con alimentos preestablecidos (con sus kcal, proteinas, hidratos...)
-- Que todo el mundo pueda insertar alimentos en la base de datos y les aparezca posteriormente a los otros usuarios por si el alimento y sus macros coincide no tener que insertarlo manualmente. (ESTO NO QUIERE DECIR QUE LOS USUARIOS PUEDAN ACCEDER A LA BASE DE DATOS Y MODIFICARLA)
-- Se guarde en la base de datos todas las comidas que vayas insertando, separadas por cada día, y que puedas consultarlas desde cualquier otro día.
-- Se guarde en la base de datos el perfil con tu configuración (kcal que necesitas comer, peso, edad...)

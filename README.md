@@ -2,6 +2,7 @@
 
 <p align="center">
   <img src="media-readme/logo.png" alt="logo" width="200" height="200">
+  [Landing Page](https://ismaelpacheco13.github.io/macros-counter-ionic-final-landing-page/)
 </p>
 
 # Sobre el proyecto
@@ -82,7 +83,11 @@ La presentación en PDF se encuentra [aquí](media-readme/presentacion.pdf).
 [![Macros Video](https://img.youtube.com/vi/dKF1f4RjDGQ/0.jpg)](https://www.youtube.com/watch?v=dKF1f4RjDGQ)
 
 # Bibliografía
-TODO
+- [Ionic Docs](https://ionicframework.com/docs)
+- [PositronX.io (Firebase Auth)](https://www.positronx.io/ionic-firebase-authentication-tutorial-with-examples/)
+- [PositronX.io (Firebase Realtime Database)](https://www.positronx.io/build-ionic-firebase-crud-app-with-angular/) + muchos post de stackoverflow para arreglar bugs de versiones, algunos métodos, etc..
+- [Codetrix (Capacitor-Google-Auth)](https://www.npmjs.com/package/@codetrix-studio/capacitor-google-auth)
+- [StackOverflow (Various Bugs Fixes)](https://es.stackoverflow.com/)
 
 
 # Objetivos

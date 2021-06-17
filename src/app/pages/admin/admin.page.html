@@ -20,6 +20,7 @@
       </ion-label>
       <ion-icon *ngIf="!user.isAdmin" slot="end" name="shield-checkmark-outline" (click)="presentAlertPromote(user)"></ion-icon>
       <ion-icon *ngIf="user.isAdmin" slot="end" name="shield-outline" (click)="presentAlertDemote(user)"></ion-icon>
+      <ion-icon *ngIf="!user.isAdmin" slot="end" name="construct-outline" (click)="presentAlertUserActions(user)"></ion-icon>
     </ion-item>
   </ion-list>
 

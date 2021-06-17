@@ -104,6 +104,11 @@ export class FoodsService {
     return this.foodListRef.set(f.id, f);
   }
 
+  public deleteRealtimeFavouriteFoodList(uid: string) { // Método solo para administradores
+    this.foodListRef = this.db.list(`/${uid}/favourite/food/`);
+    return this.foodListRef.remove();
+  }
+
   public async getRealtimeFoodBreakfastList(breakfast: Food[]) {
     let uid = this.ngFireAuth.auth.currentUser.uid;
     let date = localStorage.getItem('date');

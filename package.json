@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
     "@capacitor/android": "^3.0.0",
+    "@capacitor/app": "^1.0.1",
     "@capacitor/cli": "^3.0.0",
     "@capacitor/core": "^3.0.0",
     "@codetrix-studio/capacitor-google-auth": "^3.0.1",

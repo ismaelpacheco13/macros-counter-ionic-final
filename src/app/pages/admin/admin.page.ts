@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { AlertController } from '@ionic/angular';
+import { FoodsService } from 'src/app/services/foods.service';
+import { SettingsService } from 'src/app/services/settings.service';
 import { AuthenticationService } from 'src/app/shared/authentication-service';
 
 @Component({
@@ -15,6 +17,8 @@ export class AdminPage implements OnInit {
   constructor(
     private db: AngularFireDatabase,
     public authService: AuthenticationService,
+    public foodsService: FoodsService,
+    public settingsService: SettingsService,
     private alertController: AlertController
   ) { }
 
@@ -84,6 +88,29 @@ export class AdminPage implements OnInit {
       message: `UID: <strong>${user.uid}</strong>` + 
                `<br>Email: <strong>${user.email}</strong>` +
                `<br>Último logeo: <strong>${user.lastLoginString}</strong>`
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertUserActions(user) {
+    const alert = await this.alertController.create({
+      header: `Acciones de administración de usuario`,
+      message: `UID: <strong>${user.uid}</strong>` + 
+               `<br>Email: <strong>${user.email}</strong>`,
+      buttons: [
+        {
+          text: 'Eliminar configuración',
+          handler: async () => {
+            await this.settingsService.deleteRealtimeSettingsList(user.uid);
+          }
+        }, {
+          text: 'Eliminar comidas favoritas',
+          handler: async () => {
+            await this.foodsService.deleteRealtimeFavouriteFoodList(user.uid);
+          }
+        }
+      ]
     });
 
     await alert.present();

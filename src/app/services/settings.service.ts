@@ -122,4 +122,9 @@ export class SettingsService {
       });
     return setting;
   }
+
+  public deleteRealtimeSettingsList(uid: string) { // Método solo para administradores
+    this.settingListRef = this.db.list(`/${uid}/settings/`);
+    return this.settingListRef.remove();
+  }
 }

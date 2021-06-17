@@ -1,7 +1,7 @@
 # Macros Counter
 
 <p align="center">
-  <img src="media-readme/logo.png" alt="logo" width="200" height="200"><br>
+  <img src="media-readme/logo.png" alt="logo" width="200" height="200"><br><br>
   <a href="https://ismaelpacheco13.github.io/macros-counter-ionic-final-landing-page/">Landing Page</a>
 </p>
 

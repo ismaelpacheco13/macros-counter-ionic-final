@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="media-readme/logo.png" alt="logo" width="200" height="200"><br><br>
-  <a href="https://ismaelpacheco13.github.io/macros-counter-ionic-final-landing-page/">Landing Page</a>
+  <a href="https://ismaelpacheco13.github.io/macros-counter-ionic-final-landing-page/" target="_blank">Landing Page</a>
 </p>
 
 # Sobre el proyecto
